@@ -5,3 +5,8 @@ We will make some of this public available in case someone else want to save som
 You can find `README's` with specific instructions in each directory.
 
 PR's are welcome :)
+
+## Helm charts repository
+
+    helm repo add vl https://vizlegal.github.io/containers-and-charts/
+    helm repo update
