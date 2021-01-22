@@ -1,5 +1,16 @@
 apiVersion: v1
 entries:
+  parsr:
+  - apiVersion: v2
+    appVersion: v1.2.2
+    created: "2021-01-22T10:49:08.411849173Z"
+    description: A Helm chart for Parsr
+    digest: de95c96aadfaa8b10b08463613b12c3b010f8eeaa6f5870a40c22dc08c794c61
+    name: parsr
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/parsr-0.1.1/parsr-0.1.1.tgz
+    version: 0.1.1
   pgbouncer:
   - apiVersion: v2
     appVersion: 1.15.0
