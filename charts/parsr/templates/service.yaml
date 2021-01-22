@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "parsr.fullname" . }}
+  labels:
+    {{- include "parsr.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: api
+      protocol: TCP
+      name: api
+    - port: {{ .Values.service.port_ui }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "parsr.selectorLabels" . | nindent 4 }}
