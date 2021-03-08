@@ -1,36 +1,35 @@
 FROM elixir:1.11
+LABEL vendor="vizlegal"
 
 ENV \
-  PHX_VER=1.5.7 \
+  LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8 \
   NODE_VER=14.x \
   APP=/app HOME=/app \
-  PKGS="inotify-tools postgresql-client git"
+  PKGS="inotify-tools postgresql-client git build-essential automake cmake inotify-tools curl apt-transport-https ca-certificates locales make openssl libssl1.1 gnupg"
 
-RUN groupadd -g 1000 appuser \
-  && useradd -r -u 1000 -g appuser appuser \
+RUN \
+  groupadd -g 1000 appuser \
+  && useradd --create-home -r -u 1000 -g appuser appuser \
   && mkdir -p $APP \
   && chown appuser:appuser $APP
 
 RUN \
   curl -sL https://deb.nodesource.com/setup_$NODE_VER | bash - \
-  && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
   && apt-get update -qq \
   && apt-get install -qq $PKGS \
-  && apt-get install -qq nodejs yarn \
+  && apt-get install -qq nodejs \
   && apt-get clean \
+  && locale-gen C.UTF-8 \
+  && update-locale LANG=C.UTF-8 \
   && rm -r /var/lib/apt/lists /var/cache/apt/archives
 
-USER appuser
+# USER appuser
 WORKDIR $APP
 
 COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
-RUN \
-  mix local.hex --force \
-  && mix local.rebar --force \
-  && mix archive.install hex phx_new $PHX_VER --force
+RUN mix do local.hex --force, local.rebar --force
 
 EXPOSE 4000
-CMD ["iex"]
+# CMD ["iex"]
