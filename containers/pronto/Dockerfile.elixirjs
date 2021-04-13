@@ -1,0 +1,12 @@
+FROM quay.io/vizlegalq/pronto:0.11.0-elixir
+
+LABEL vendor="vizlegal"
+
+ENV \
+  GEMS="pronto-json pronto-jshint pronto-eslint"
+
+RUN \
+  curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+  && apt-get install nodejs -qqy \
+  && rm -r /var/lib/apt/lists /var/cache/apt/archives \
+  && gem install $GEMS --no-document --silent

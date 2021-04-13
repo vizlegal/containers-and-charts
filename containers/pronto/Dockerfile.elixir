@@ -15,13 +15,6 @@ RUN \
 
 RUN \
   mix local.hex --force \
-  && git clone https://github.com/rrrene/bunt \
-  && cd bunt \
-  && mix archive.build \
-  && mix archive.install --force \
-  && cd - \
-  && git clone https://github.com/rrrene/credo \
-  && cd credo \
-  && mix deps.get \
-  && mix archive.build \
-  && mix archive.install --force
+  && mix archive.install hex dialyxir --force \
+  && mix archive.install hex bunt --force \
+  && mix archive.install hex credo --force
