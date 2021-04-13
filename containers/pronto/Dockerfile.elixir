@@ -1,0 +1,27 @@
+FROM quay.io/vizlegalq/pronto:0.11.0
+
+LABEL vendor="vizlegal"
+
+ENV \
+  GEMS="pronto-credo pronto-dialyxir"
+
+RUN \
+  wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb \
+  && dpkg -i erlang-solutions_2.0_all.deb \
+  && apt-get update -qq \
+  && apt-get install esl-erlang elixir -qqy \
+  && rm -r /var/lib/apt/lists /var/cache/apt/archives \
+  && gem install $GEMS --no-document --silent
+
+RUN \
+  mix local.hex --force \
+  && git clone https://github.com/rrrene/bunt \
+  && cd bunt \
+  && mix archive.build \
+  && mix archive.install --force \
+  && cd - \
+  && git clone https://github.com/rrrene/credo \
+  && cd credo \
+  && mix deps.get \
+  && mix archive.build \
+  && mix archive.install --force
