@@ -1,4 +1,5 @@
-FROM elixir:1.11
+FROM elixir:1.11.4
+
 LABEL vendor="vizlegal"
 
 ENV \
@@ -16,8 +17,7 @@ RUN \
 RUN \
   curl -sL https://deb.nodesource.com/setup_$NODE_VER | bash - \
   && apt-get update -qq \
-  && apt-get install -qq $PKGS \
-  && apt-get install -qq nodejs \
+  && apt-get install -qq $PKGS nodejs \
   && apt-get clean \
   && locale-gen C.UTF-8 \
   && update-locale LANG=C.UTF-8 \
