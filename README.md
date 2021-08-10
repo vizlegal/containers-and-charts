@@ -1,10 +1,10 @@
-Sometime we need to create our own containers or charts to have a more updated version or simply becuase we prefer to deploy it in a different way.
+Sometimes we need to create our own containers or charts to have a more updated version, or simply because we prefer to deploy it differently.
 
-We will make some of this public available in case someone else want to save some hours of work but remeber it is as-is with not guarantee or responsability for Vizlegal.
+We will make some of this public available in case someone else want to save some hours of work, but remember it is as-is with not guarantee or responsibility for Vizlegal.
 
 You can find `README's` with specific instructions in each directory.
 
-PR's are welcome :)
+PRs are welcome :)
 
 ## Helm charts repository
 
