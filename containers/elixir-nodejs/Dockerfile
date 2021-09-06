@@ -1,10 +1,10 @@
-FROM elixir:1.11.4
+FROM elixir:1.12
 
 LABEL vendor="vizlegal"
 
 ENV \
   LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8 \
-  NODE_VER=14.x \
+  NODE_VER=16.x \
   APP=/app HOME=/app \
   PKGS="inotify-tools postgresql-client git build-essential automake cmake inotify-tools curl apt-transport-https ca-certificates locales make openssl libssl1.1 gnupg"
 
