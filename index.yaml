@@ -14,6 +14,16 @@ entries:
   pgbouncer:
   - apiVersion: v2
     appVersion: 1.15.0
+    created: "2021-09-09T20:52:24.549748173Z"
+    description: A Helm chart for PGBouncer
+    digest: 933d349e0769c4cc0c95e15490ad939b39dc0b30120d66144d71ab8dcfddbfe4
+    name: pgbouncer
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/pgbouncer-0.1.5/pgbouncer-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 1.15.0
     created: "2021-01-21T11:26:03.5321926Z"
     description: A Helm chart for PGBouncer
     digest: c35bf37d23ce09ebfb0708a678a937ccb9872ca5cad8e45adc9a322533dbcedc
