@@ -31,6 +31,20 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
+        {{- if .Values.metrics.enabled }}
+        - name: {{ .Chart.Name }}-metrics
+          image: "spreaker/prometheus-pgbouncer-exporter:2.1.1"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: metrics
+              containerPort: 9100
+              protocol: TCP
+          env:
+            {{- range $key, $val := .Values.metrics.env }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end}}
+        {{- end }}
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
