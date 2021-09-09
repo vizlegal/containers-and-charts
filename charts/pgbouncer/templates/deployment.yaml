@@ -37,7 +37,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: metrics
-              containerPort: 9100
+              containerPort: 9127
               protocol: TCP
           env:
             {{- range $key, $val := .Values.metrics.env }}

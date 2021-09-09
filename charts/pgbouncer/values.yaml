@@ -25,7 +25,7 @@ serviceAccount:
 
 # Add this annotations to enable metrics
 # prometheus.io/path: "/"
-# prometheus.io/port: "9100"
+# prometheus.io/port: "9127"
 # prometheus.io/scrape: "true"
 podAnnotations: {}
 
@@ -77,7 +77,7 @@ metrics:
   enabled: false
   env:
     PGBOUNCER_HOST: localhost
-    PGBOUNCER_PORT: 6432
+    PGBOUNCER_PORT: 5432
     PGBOUNCER_USER: user
     PGBOUNCER_PASS: pass
 
