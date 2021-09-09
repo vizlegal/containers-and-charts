@@ -86,7 +86,7 @@ jobs:
         with:
           version: v3.3.0 #renovate: datasource=github-releases depName=helm/chart-testing
       - name: Run chart install
-        uses: helm/chart-testing-action@master
+        uses: helm/chart-testing-action@main
         with:
           command: install
           config: .github/ct.yaml
