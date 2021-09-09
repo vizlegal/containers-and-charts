@@ -1,6 +1,6 @@
 # PGBouncer chart
 
-You can find more information in the repo of which this image is based:
+You can find more information in the original repo:
 
 -  https://github.com/edoburu/docker-pgbouncer
 

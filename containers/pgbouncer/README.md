@@ -9,7 +9,7 @@ Based on https://github.com/edoburu/docker-pgbouncer
 
 ## Build
 
-    podman build -t quay.io/vizlegalq/pgbouncer:1.15.0 .
+    podman build -t quay.io/vizlegalq/pgbouncer:1.16.0 .
 
 ## RUN
 
