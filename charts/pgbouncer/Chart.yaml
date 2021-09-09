@@ -3,5 +3,5 @@ name: pgbouncer
 description: A Helm chart for PGBouncer
 
 type: application
-version: 0.1.5
+version: 0.1.6
 appVersion: 1.15.0
