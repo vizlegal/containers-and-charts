@@ -19,8 +19,8 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
-          version: 3.4.0
-      - uses: actions/setup-python@v2.2.1
+          version: 3.8.1
+      - uses: actions/setup-python@v2
         with:
           python-version: 3.7
       - name: Install chart-testing
@@ -28,7 +28,7 @@ jobs:
         with:
           version: v3.3.0
       - name: Run lint
-        uses: helm/chart-testing-action@master
+        uses: helm/chart-testing-action@2.2.1
         with:
           command: lint
           config: .github/ct.yaml
