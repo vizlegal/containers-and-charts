@@ -39,7 +39,7 @@ jobs:
 
       - name: Run chart-testing (lint)
         run: |
-          repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add bitnami https://charts.bitnami.com/bitnami
           ct lint --config .github/ct.yaml
 
       - name: Create kind cluster
