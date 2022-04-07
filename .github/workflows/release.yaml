@@ -32,3 +32,6 @@ jobs:
           charts_dir: charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          cr package .
