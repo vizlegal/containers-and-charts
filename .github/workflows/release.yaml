@@ -26,13 +26,13 @@ jobs:
         with:
           version: v3.8.1
 
-      - name: Set up chart-releaser
-        uses: helm/chart-releaser-action@v1.4.0
+      - name: Add chart deps
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+
       - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.4.0
         with:
           charts_dir: charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run: |
-          helm repo add bitnami https://charts.bitnami.com/bitnami
-          cr package .
