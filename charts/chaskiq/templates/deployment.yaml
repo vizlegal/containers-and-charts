@@ -32,14 +32,14 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["bundle", "ex", "rails", "db:migrate"]
+          envFrom:
+            - secretRef:
+                name: {{ include "chaskiq.fullname" . }}
           env:
             {{- range $key, $val := .Values.env }}
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end}}
-          envFrom:
-            - secretRef:
-                name: {{ include "chaskiq.fullname" . }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -61,14 +61,14 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ include "chaskiq.fullname" . }}
           env:
             {{- range $key, $val := .Values.env }}
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end}}
-          envFrom:
-            - secretRef:
-                name: {{ include "chaskiq.fullname" . }}
         - name: {{ .Chart.Name }}-sq
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -77,14 +77,14 @@ spec:
           command: ["bundle", "ex", "sidekiq", "-C","config/sidekiq.yml"]
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ include "chaskiq.fullname" . }}
           env:
             {{- range $key, $val := .Values.env }}
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end}}
-          envFrom:
-            - secretRef:
-                name: {{ include "chaskiq.fullname" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
