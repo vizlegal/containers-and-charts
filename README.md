@@ -9,4 +9,8 @@ PRs are welcome :)
 ## Helm charts repository
 
     helm repo add vl https://vizlegal.github.io/containers-and-charts/
-    helm repo update
+    helm repo updated
+
+## Automatic repo release
+
+To run CI and auto generate the package a PR and a new version chart is needed, then GH-actions will take care of the rest
