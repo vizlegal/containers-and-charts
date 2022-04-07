@@ -23,15 +23,10 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.7
-      - name: Install chart-testing
-        uses: helm/chart-testing-action@v2.0.1
-        with:
-          version: v3.3.0
-      - name: Run lint
-        uses: helm/chart-testing-action@2.2.1
-        with:
-          command: lint
-          config: .github/ct.yaml
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.2.1
+      - name: Run chart-testing (lint)
+        run: ct lint
 
   kubeval-chart:
     runs-on: ubuntu-latest
@@ -66,12 +61,10 @@ jobs:
       matrix:
         k8s:
           # from https://hub.docker.com/r/kindest/node/tags
-          - v1.14.10
-          - v1.15.12
-          - v1.16.15
-          - v1.17.11
-          - v1.18.8
+          - v1.17.17
+          - v1.18.20
           - v1.19.3
+          - v1.23.5
     steps:
       - name: Checkout
         uses: actions/checkout@v2.3.4
@@ -81,12 +74,7 @@ jobs:
         uses: helm/kind-action@v1.1.0
         with:
           node_image: kindest/node:${{ matrix.k8s }}
-      - name: Install chart-testing
-        uses: helm/chart-testing-action@v2.0.1
-        with:
-          version: v3.3.0 #renovate: datasource=github-releases depName=helm/chart-testing
-      - name: Run chart install
-        uses: helm/chart-testing-action@main
-        with:
-          command: install
-          config: .github/ct.yaml
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.2.1
+      - name: Run chart-testing (install)
+        run: ct install
