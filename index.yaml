@@ -3,6 +3,21 @@ entries:
   chaskiq:
   - apiVersion: v2
     appVersion: 0.9.8
+    created: "2022-04-07T13:35:15.008143446Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~16.6.0
+    description: A Helm chart for Kubernetes
+    digest: e3c4daad50c1bd4726a4bff6e01923d5d2231096bd9884fb17802a2c55678247
+    name: chaskiq
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/chaskiq-0.1.11/chaskiq-0.1.11.tgz
+    version: 0.1.11
+  - apiVersion: v2
+    appVersion: 0.9.8
     created: "2022-04-07T13:21:28.226584051Z"
     dependencies:
     - condition: redis.enabled
@@ -83,4 +98,4 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/pgbouncer-0.1.4/pgbouncer-0.1.4.tgz
     version: 0.1.4
-generated: "2022-04-07T13:21:28.226609952Z"
+generated: "2022-04-07T13:35:15.008319347Z"
