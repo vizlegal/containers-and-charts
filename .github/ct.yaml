@@ -1,6 +1,6 @@
 remote: origin
 target-branch: master
-helm-extra-args: --timeout 600
+helm-extra-args: --timeout 600s
 check-version-increment: true
 validate-maintainers: false
 debug: true
