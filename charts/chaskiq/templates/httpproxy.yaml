@@ -1,0 +1,52 @@
+{{- if .Values.httpproxy.enabled -}}
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: {{ include "chaskiq.fullname" . }}
+  labels:
+    {{- include "chaskiq.labels" . | nindent 4 }}
+spec:
+  ingressClassName: contour
+  virtualhost:
+    fqdn: {{ .Values.httpproxy.host }}
+    tls:
+      secretName: {{ .Values.httpproxy.host }}
+  routes:
+    - conditions:
+        - prefix: /
+      enableWebsockets: true
+      services:
+        - name: {{ include "chaskiq.fullname" . }}
+          port: {{ .Values.service.port }}
+      # responseHeadersPolicy:
+      #   set:
+      #     - name: x-xss-protection
+      #       value: 1; mode=block
+      #     - name: x-content-type-options
+      #       value: nosniff
+      #     - name: x-frame-options
+      #       value: DENY
+      #     - name: strict-transport-security
+      #       value: max-age=315360000; includeSubDomains
+      #     - name: x-permitted-cross-domain-policies
+      #       value: none
+      #     - name: x-download-options
+      #       value: noopen
+      #     - name: referrer-policy
+      #       value: origin-when-cross-origin
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "chaskiq.fullname" . }}
+  labels:
+    {{- include "chaskiq.labels" . | nindent 4 }}
+spec:
+  commonName: {{ .Values.httpproxy.host }}
+  dnsNames:
+    - {{ .Values.httpproxy.host }}
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  secretName: {{ .Values.httpproxy.host }}
+{{- end -}}
