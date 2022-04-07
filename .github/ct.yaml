@@ -2,6 +2,7 @@ remote: origin
 target-branch: master
 helm-extra-args: --timeout 600
 check-version-increment: true
+validate-maintainers: false
 debug: true
 chart-dirs:
   - charts
