@@ -1,0 +1,15 @@
+{
+  "name": "playwright-vlui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "VRT_CIBUILDID=$(date +%H:%M:%S_%d-%m-%Y) playwright test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.22.2",
+    "@visual-regression-tracker/agent-playwright": "^5.1.0"
+  }
+}
