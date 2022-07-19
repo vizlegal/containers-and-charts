@@ -92,11 +92,18 @@ tolerations: []
 affinity: {}
 
 env:
-  APP_FRONTEND_URL: "http://ui.vrt.svc.cluster.local"
+  REACT_APP_API_URL: http://vrt.vrt.svc.cluster.local:4200
+  APP_FRONTEND_URL: "http://vrt.vrt.svc.cluster.local"
   APP_PORT: "4200"
   AUTO_APPROVE_BASED_ON_HISTORY: "true"
   DATABASE_URL: "postgresql://pg/vrt"
   BODY_PARSER_JSON_LIMIT: "5mb"
   JWT_LIFE_TIME: "1d"
   JWT_SECRET: "foobar"
-  REACT_APP_API_URL: http://api.vrt.svc.cluster.local
+
+persistence:
+  enabled: false
+  storageClass: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 5Gi
