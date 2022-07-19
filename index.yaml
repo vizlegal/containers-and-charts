@@ -101,6 +101,16 @@ entries:
   vrt:
   - apiVersion: v2
     appVersion: 4.20.2
+    created: "2022-07-19T17:20:03.950376482Z"
+    description: A Helm chart for Kubernetes
+    digest: c6fd5f971abdcea073ef45191d7b4d177d0cb9d96c6b1d6e34aedc8f32210da2
+    name: vrt
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/vrt-0.2.0/vrt-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 4.20.2
     created: "2022-07-19T16:48:26.845296809Z"
     description: A Helm chart for Kubernetes
     digest: 74e471dd510855038c17b65d7598696227f43ffed4ff945b4c77d5b9e14ac9c7
@@ -109,4 +119,4 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/vrt-0.1.0/vrt-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-19T16:48:26.845314309Z"
+generated: "2022-07-19T17:20:03.950392182Z"
