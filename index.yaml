@@ -98,4 +98,15 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/pgbouncer-0.1.4/pgbouncer-0.1.4.tgz
     version: 0.1.4
-generated: "2022-04-07T13:35:15.008319347Z"
+  vrt:
+  - apiVersion: v2
+    appVersion: 4.20.2
+    created: "2022-07-19T16:48:26.845296809Z"
+    description: A Helm chart for Kubernetes
+    digest: 74e471dd510855038c17b65d7598696227f43ffed4ff945b4c77d5b9e14ac9c7
+    name: vrt
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/vrt-0.1.0/vrt-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-07-19T16:48:26.845314309Z"
