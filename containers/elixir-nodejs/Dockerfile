@@ -1,6 +1,6 @@
 ARG variant="-slim"
 
-FROM elixir:1.13.2$variant
+FROM elixir:1.14.3$variant
 
 ARG port=4000
 ARG mix_env=dev
