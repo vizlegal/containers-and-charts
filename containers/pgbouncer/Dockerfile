@@ -1,6 +1,6 @@
-FROM alpine:3.13
+FROM alpine:3.18
 
-ENV PGB_VERSION=1.15.0
+ENV PGB_VERSION=1.19.0
 
 RUN apk add --update openssl "pgbouncer>${PGB_VERSION}" \
   && rm /etc/pgbouncer/pgbouncer.ini \

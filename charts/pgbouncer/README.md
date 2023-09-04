@@ -1,6 +1,5 @@
 # PGBouncer chart
 
-
 ## Install
 
 Add our repo:
@@ -19,4 +18,3 @@ To configure it you can use on of these methods:
 ## credits
 
 Based on https://github.com/edoburu/docker-pgbouncer
-
