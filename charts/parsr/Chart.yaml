@@ -3,5 +3,5 @@ name: parsr
 description: A Helm chart for Parsr
 
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: v1.2.2

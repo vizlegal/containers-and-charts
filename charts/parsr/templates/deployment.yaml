@@ -49,6 +49,7 @@ spec:
               port: api
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.ui.enabled }}
         - name: {{ .Chart.Name }}-ui
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -71,6 +72,7 @@ spec:
           readinessProbe:
           resources:
             {{- toYaml .Values.resources_ui | nindent 12 }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
