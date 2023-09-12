@@ -49,6 +49,16 @@ entries:
   parsr:
   - apiVersion: v2
     appVersion: v1.2.2
+    created: "2023-09-12T08:49:26.287624991Z"
+    description: A Helm chart for Parsr
+    digest: 19a87e9240d476695548247f88c38d9880384bcc75e803718b489454edf2e2d9
+    name: parsr
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/parsr-0.1.3/parsr-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: v1.2.2
     created: "2023-09-12T08:42:52.87323887Z"
     description: A Helm chart for Parsr
     digest: 6f7020f698112fba0b4c7a66f30a5eae954bb68267982641c524029a1d5b36b1
@@ -149,4 +159,4 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/vrt-0.1.0/vrt-0.1.0.tgz
     version: 0.1.0
-generated: "2023-09-12T08:42:52.87325907Z"
+generated: "2023-09-12T08:49:26.287656292Z"
