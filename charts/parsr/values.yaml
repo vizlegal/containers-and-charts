@@ -36,7 +36,8 @@ securityContext:
   # runAsNonRoot: true
   # runAsUser: 1000
 
-ui.enabled: false
+ui:
+  enabled: false
 
 service:
   type: ClusterIP
