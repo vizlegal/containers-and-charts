@@ -1,0 +1,14 @@
+{{- if .Values.persistent.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "livebook.fullname" . }}
+  labels:
+    {{- include "livebook.labels" . | nindent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistent.storage }}
+{{- end }}
