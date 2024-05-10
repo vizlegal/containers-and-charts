@@ -46,6 +46,17 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/chaskiq-0.1.9/chaskiq-0.1.9.tgz
     version: 0.1.9
+  livebook:
+  - apiVersion: v2
+    appVersion: 0.12.1
+    created: "2024-05-10T10:52:42.539940186Z"
+    description: A Helm chart for Kubernetes
+    digest: c1f9c6c4e3a0ed6155714de2853d1a7ba8f195934762eba9fdd6a4cf5fd55aec
+    name: livebook
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/livebook-0.1.0/livebook-0.1.0.tgz
+    version: 0.1.0
   parsr:
   - apiVersion: v2
     appVersion: v1.2.2
@@ -159,4 +170,4 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/vrt-0.1.0/vrt-0.1.0.tgz
     version: 0.1.0
-generated: "2023-09-12T08:49:26.287656292Z"
+generated: "2024-05-10T10:52:42.539971544Z"
