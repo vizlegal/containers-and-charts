@@ -46,6 +46,17 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/chaskiq-0.1.9/chaskiq-0.1.9.tgz
     version: 0.1.9
+  it-tools:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-05-14T10:29:10.555301094Z"
+    description: A Helm chart for Kubernetes
+    digest: e2ea355015b0d8ddff3ef3e6e93137474521152225106473f07cc3ef6003333b
+    name: it-tools
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/it-tools-0.1.0/it-tools-0.1.0.tgz
+    version: 0.1.0
   livebook:
   - apiVersion: v2
     appVersion: 0.12.1
@@ -170,4 +181,4 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/vrt-0.1.0/vrt-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-10T10:52:42.539971544Z"
+generated: "2024-05-14T10:29:10.555350885Z"
