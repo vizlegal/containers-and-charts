@@ -13,16 +13,19 @@ image:
 imageUi:
   repository: visualregressiontracker/ui
   pullPolicy: IfNotPresent
-  tag: "4.20.3"
+  tag: "5.0.4"
 
 imageMigration:
   repository: visualregressiontracker/migration
   pullPolicy: IfNotPresent
-  tag: "4.20.0"
+  tag: "5.0.1"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+secret:
+  create: false
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -36,7 +39,7 @@ serviceAccount:
 podAnnotations: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
+  # fsGroup: 1000
 
 securityContext: {}
   # capabilities:
@@ -66,17 +69,17 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 400Mi
+  requests:
+    cpu: 250m
+    memory: 400Mi
 
 autoscaling:
   enabled: false
@@ -96,14 +99,12 @@ env:
   APP_FRONTEND_URL: "http://vrt.vrt.svc.cluster.local"
   APP_PORT: "4200"
   AUTO_APPROVE_BASED_ON_HISTORY: "true"
-  DATABASE_URL: "postgresql://pg/vrt"
   BODY_PARSER_JSON_LIMIT: "5mb"
   JWT_LIFE_TIME: "1d"
   JWT_SECRET: "foobar"
 
 persistence:
-  enabled: false
-  storageClass: ""
-  accessModes:
-    - ReadWriteOnce
+  enabled: true
+  storageClass: "scw-bssd-retain"
+  accessModes: ["ReadWriteMany"]
   size: 5Gi

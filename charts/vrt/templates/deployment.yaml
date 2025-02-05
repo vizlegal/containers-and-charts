@@ -29,10 +29,24 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
+        - name: vrt-data-chown
+          image: "busybox"
+          imagePullPolicy: IfNotPresent
+          command: ["sh", "-c", "chown 1000:1000 /imageUploads"]
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: {{ .Chart.Name }}-data
+              mountPath: "/imageUploads"
         - name: {{ .Chart.Name }}-migration
           image: "{{ .Values.imageMigration.repository }}:{{ .Values.imageMigration.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "vrt.fullname" . }}
+                  key: database_url
             {{- range $key, $val := .Values.env }}
             - name: {{ $key }}
               value: {{ $val | quote }}
@@ -57,12 +71,15 @@ spec:
           #     port: api
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.persistence.enabled }}
           volumeMounts:
-          - name: "{{ .Chart.Name }}-data"
-            mountPath: /imageUploads
-          {{- end }}
+            - name: {{ .Chart.Name }}-data
+              mountPath: "/imageUploads"
           env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "vrt.fullname" . }}
+                  key: database_url
             {{- range $key, $val := .Values.env }}
             - name: {{ $key }}
               value: {{ $val | quote }}
@@ -91,6 +108,9 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end}}
+          volumeMounts:
+            - name: {{ .Chart.Name }}-data
+              mountPath: /usr/share/nginx/html/static/imageUploads
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -106,7 +126,7 @@ spec:
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
   - metadata:
-      name: "{{ .Chart.Name }}-data"
+      name: {{ .Chart.Name }}-data
     spec:
       accessModes:
       {{- range .Values.persistence.accessModes }}
