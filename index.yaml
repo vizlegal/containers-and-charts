@@ -173,6 +173,16 @@ entries:
   postgresql:
   - apiVersion: v2
     appVersion: "17.6"
+    created: "2025-09-25T16:54:12.212172581Z"
+    description: A Helm chart for a simple PostgreSQL instace (for dev) not a stafulset
+    digest: 0d4626c16551ad4cbbab41bf5356b1d9761cdd0bd5d99d7eafa7afb15adb936c
+    name: postgresql
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/postgresql-0.1.1/postgresql-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: "17.6"
     created: "2025-09-25T16:35:53.14076447Z"
     description: A Helm chart for PostgreSQL
     digest: ac59cf761b6e6fe84391481afbd873068fb068e7323857874294f44c9ace5715
@@ -202,4 +212,4 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/vrt-0.1.0/vrt-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-25T16:35:53.14079615Z"
+generated: "2025-09-25T16:54:12.212216062Z"
