@@ -46,6 +46,9 @@ persistence:
   enabled: true
   size: 8Gi
   storageClass: ""
+  # subPath to mount the data directory to. Useful for avoiding issues with
+  # non-empty volumes, such as those containing a "lost+found" directory.
+  subPath: "data"
 
 # Default PostgreSQL credentials
 postgresql:
