@@ -170,6 +170,17 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/pgbouncer-0.1.4/pgbouncer-0.1.4.tgz
     version: 0.1.4
+  postgresql:
+  - apiVersion: v2
+    appVersion: "17.6"
+    created: "2025-09-25T16:35:53.14076447Z"
+    description: A Helm chart for PostgreSQL
+    digest: ac59cf761b6e6fe84391481afbd873068fb068e7323857874294f44c9ace5715
+    name: postgresql
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/postgresql-0.1.0/postgresql-0.1.0.tgz
+    version: 0.1.0
   vrt:
   - apiVersion: v2
     appVersion: 4.20.2
@@ -191,4 +202,4 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/vrt-0.1.0/vrt-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-21T18:38:33.293142961Z"
+generated: "2025-09-25T16:35:53.14079615Z"
