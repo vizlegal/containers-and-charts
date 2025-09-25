@@ -1,0 +1,12 @@
+PostgreSQL can be accessed via port 5432 on the following DNS name from within your cluster:
+{{ include "postgresql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+
+To get the password for '{{ .Values.postgresql.username }}' run:
+    export POSTGRES_PASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} {{ include "postgresql.fullname" . }} -o jsonpath="{.data.POSTGRES_PASSWORD}" | base64 --decode)
+
+To connect to your database run the following command:
+    kubectl run {{ include "postgresql.fullname" . }}-client --rm --tty -i --restart='Never' --namespace {{ .Release.Namespace }} --image docker.io/bitnami/postgresql --env="PGPASSWORD=$POSTGRES_PASSWORD" --command -- psql --host {{ include "postgresql.fullname" . }} -U {{ .Values.postgresql.username }} -d {{ .Values.postgresql.database }}
+
+To connect to your database from outside the cluster execute the following commands:
+    kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "postgresql.fullname" . }} 5432:5432 &
+    PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U {{ .Values.postgresql.username }} -d {{ .Values.postgresql.database }} -p 5432
