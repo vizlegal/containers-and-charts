@@ -2,6 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# This chart is for single instace and development/testing use only, (it uses a Deployment instead of a StatefulSet)
+# more than one replica will not work
 replicaCount: 1
 
 image:

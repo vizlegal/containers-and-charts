@@ -1,6 +1,6 @@
 apiVersion: v2
 name: postgresql
-description: A Helm chart for PostgreSQL
+description: A Helm chart for a simple PostgreSQL instace (for dev) not a stafulset
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "17.6"
