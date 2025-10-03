@@ -1,10 +1,10 @@
 ARG variant="-slim"
 
-FROM elixir:1.17.3$variant
+FROM elixir:1.18$variant
 
 ARG port=4000
 ARG mix_env=dev
-ARG node_ver=16.x
+ARG node_ver=22.x
 
 LABEL vendor="vizlegal"
 
