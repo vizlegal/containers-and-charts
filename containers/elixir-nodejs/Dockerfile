@@ -1,6 +1,6 @@
 ARG variant="-slim"
 
-FROM elixir:1.18$variant
+FROM elixir:1.18-otp-27$variant
 
 ARG port=4000
 ARG mix_env=dev
@@ -13,7 +13,7 @@ ENV \
   LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8 \
   NODE_VER="${node_ver}" \
   APP=/app HOME=/app \
-  PKGS="inotify-tools postgresql-client git build-essential automake cmake libncurses6 apt-transport-https ca-certificates locales make openssl gnupg"
+  PKGS="inotify-tools postgresql-client git build-essential automake cmake apt-transport-https ca-certificates locales make openssl gnupg"
 
 EXPOSE $port
 
