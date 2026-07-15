@@ -12,6 +12,10 @@
 
     docker buildx build --push --platform linux/arm64,linux/amd64 --build-arg node_ver=20.x --tag quay.io/vizlegalq/elixir-nodejs:1.17-node20-otp-27-slim .
 
+The base elixir version defaults to the one in the Dockerfile; override it to rebuild older tags (rebuilding with `--pull` also picks up the latest OTP patch, e.g. security/ssl fixes):
+
+    docker buildx build --push --pull --platform linux/arm64,linux/amd64 --build-arg elixir_ver=1.17-otp-27 --build-arg node_ver=20.x --tag quay.io/vizlegalq/elixir-nodejs:1.17-node20-otp-27-slim .
+
 
 ## Build MultiArch with Podman
 
