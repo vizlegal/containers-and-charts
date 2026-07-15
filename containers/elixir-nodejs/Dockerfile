@@ -1,6 +1,7 @@
 ARG variant="-slim"
+ARG elixir_ver="1.18-otp-27"
 
-FROM elixir:1.18-otp-27$variant
+FROM elixir:$elixir_ver$variant
 
 ARG port=4000
 ARG mix_env=dev
