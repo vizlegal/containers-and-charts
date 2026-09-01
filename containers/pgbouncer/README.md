@@ -16,12 +16,13 @@ other is a build error, not a surprise at runtime.
 
 ## Build
 
-The cluster runs amd64, so pass `--platform` when building on an arm64 Mac:
+Build for the architecture your cluster runs. Pass `--platform` when cross-building
+(for example an arm64 workstation targeting an amd64 cluster):
 
     podman build --platform linux/amd64 -t quay.io/vizlegalq/pgbouncer:1.25.2 .
 
-Push the version tag only — no `latest`. A mutable tag on shared infra is how you
-end up unable to tell what is actually running.
+Push the version tag only — no `latest`. A mutable tag on a shared component makes
+it impossible to tell what is actually running.
 
     podman push quay.io/vizlegalq/pgbouncer:1.25.2
 
