@@ -10,7 +10,11 @@ spec:
   {{- end }}
   strategy:
     rollingUpdate:
+      # New pod must be Ready before the old one is torn down, so there is never
+      # a window where connecting fails. At replicaCount 1, 25% rounds up to 1;
+      # stated explicitly rather than relying on that.
       maxUnavailable: 0
+      maxSurge: 1
   selector:
     matchLabels:
       {{- include "pgbouncer.selectorLabels" . | nindent 6 }}
@@ -28,6 +32,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "pgbouncer.serviceAccountName" . }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds | default 20 }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -44,6 +49,10 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end}}
+          {{- with .Values.metrics.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
         {{- end }}
         - name: {{ .Chart.Name }}
           securityContext:
@@ -54,18 +63,18 @@ spec:
             - name: postgres
               containerPort: 5432
               protocol: TCP
+          {{- with .Values.livenessProbe }}
           livenessProbe:
-            tcpSocket:
-              port: postgres
-            periodSeconds: 60
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
           readinessProbe:
-            tcpSocket:
-              port: postgres
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.lifecycle }}
           lifecycle:
-            preStop:
-              exec:
-                # Allow existing queries clients to complete within 120 seconds
-                command: ["/bin/sh", "-c", "killall -INT pgbouncer && sleep 120"]
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

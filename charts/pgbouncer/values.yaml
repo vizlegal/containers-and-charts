@@ -42,39 +42,77 @@ securityContext:
   # runAsNonRoot: true
   # runAsUser: 1000
 
+# Shutdown behaviour.
+#
+# Both of pgbouncer's graceful shutdowns wait on clients:
+#   SIGINT  -> waits for server connections to be released
+#   SIGTERM -> waits for all clients to disconnect  (1.23+; was "fast exit" before)
+# In pool_mode=session a server connection is released only when its client
+# disconnects, and application connection pools typically hold their client
+# connections for the lifetime of the process. So both shutdowns hang
+# until terminationGracePeriodSeconds expires and the kubelet SIGKILLs anyway.
+# SIGQUIT ("fast exit") is the only deterministic shutdown.
+#
+# The sleep is not a drain -- it gives the kubelet time to remove the pod from
+# Service endpoints first, so no new connections land on a pod that is going
+# away. Existing connections are severed either way; that is inherent to
+# pgbouncer, which has no connection handoff.
+terminationGracePeriodSeconds: 20
+
+lifecycle:
+  preStop:
+    exec:
+      command: ["/bin/sh", "-c", "sleep 5; killall -QUIT pgbouncer"]
+
+# The whole probe is defined here, handler included, so it can be replaced
+# rather than only retuned. Set either to null to drop the probe entirely.
+# Helm deep-merges values, so to swap the handler you must null the default
+# alongside the replacement, e.g.
+#   livenessProbe:
+#     tcpSocket: null
+#     exec:
+#       command: ["/bin/sh", "-c", "..."]
+#
+# tcpSocket only proves the listener is up, not that PostgreSQL is reachable.
+# That is deliberate: liveness should not restart pgbouncer during a database
+# outage, when there is nothing wrong with pgbouncer itself.
+livenessProbe:
+  tcpSocket:
+    port: postgres
+  periodSeconds: 15
+  failureThreshold: 3
+
+readinessProbe:
+  tcpSocket:
+    port: postgres
+  periodSeconds: 5
+  failureThreshold: 2
+
 service:
   type: ClusterIP
   port: 5432
 
-ingress:
-  enabled: false
-  annotations:
-    {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths: []
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
+# pgbouncer is a single-threaded epoll process with a small, predictable
+# footprint, so defaults are set rather than left empty: with no requests the
+# pod lands in BestEffort QoS and is first to be evicted under node memory
+# pressure -- a bad property for a connection pooler everything else depends on.
+# No CPU limit on purpose: throttling a latency-critical proxy costs more than
+# it saves. Measure your own workload and override as needed.
 resources:
-  {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    memory: 256Mi
 
 metrics:
   enabled: false
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 64Mi
   env:
     PGBOUNCER_HOST: localhost
     PGBOUNCER_PORT: 5432
@@ -88,14 +126,37 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+# Set only ONE of minAvailable / maxUnavailable -- the API rejects a PDB with
+# both, and minAvailable defaults to 1 here, so pass minAvailable: null if you
+# want maxUnavailable. The template fails the render rather than letting you
+# find out at apply time.
+#
+# A PDB cannot buy availability at replicaCount: 1 -- it can only turn a silent
+# outage during a node drain into a blocked drain. That is a real trade-off, so
+# it is off by default. Enable it once you run more than one replica.
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+
+# Image for the `helm test` connectivity pod. Pinned rather than floating on
+# :latest, for the same reason the pgbouncer image is pinned.
+tests:
+  image: busybox:1.37
+
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
 
-# Secret will not be deleted and can be orphaned
-#   so once created this must be false
-#   by default dummy secrets are created
+# DANGER: this creates a Secret named after the release containing DUMMY data
+# ("foo" for both pgbouncer.ini and userlist.txt), annotated
+# helm.sh/resource-policy: keep so it is never cleaned up.
+#
+# If the real Secret of that name is managed by something else -- an
+# ExternalSecret with creationPolicy: Owner, sealed-secrets, sops -- turning
+# this on puts two controllers in a fight over the same object, and whichever
+# write lands last decides whether pgbouncer gets a real config or the string
+# "foo". Leave it false unless this chart is genuinely the only owner.
 secret:
   enabled: false

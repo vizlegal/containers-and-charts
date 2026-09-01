@@ -8,8 +8,11 @@ metadata:
     "helm.sh/hook": test
 spec:
   containers:
-    - name: wget
-      image: busybox
-      command: ['wget']
-      args: ['{{ include "pgbouncer.fullname" . }}:{{ .Values.service.port }}']
+    # A TCP connect is the most we can assert without credentials. The previous
+    # scaffold ran `wget` against port 5432, which speaks the Postgres wire
+    # protocol -- that test could only ever fail.
+    - name: tcp-connect
+      image: {{ .Values.tests.image }}
+      command: ["nc"]
+      args: ["-z", "-w", "5", "{{ include "pgbouncer.fullname" . }}", "{{ .Values.service.port }}"]
   restartPolicy: Never

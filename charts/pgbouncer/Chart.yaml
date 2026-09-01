@@ -3,5 +3,18 @@ name: pgbouncer
 description: A Helm chart for PGBouncer
 
 type: application
-version: 0.2.2
-appVersion: 1.21.0
+version: 0.3.0
+appVersion: "1.25.2"
+
+home: https://github.com/vizlegal/containers-and-charts
+sources:
+  - https://github.com/vizlegal/containers-and-charts/tree/master/charts/pgbouncer
+  - https://github.com/vizlegal/containers-and-charts/tree/master/containers/pgbouncer
+  - https://github.com/pgbouncer/pgbouncer
+keywords:
+  - pgbouncer
+  - postgresql
+  - connection-pooler
+maintainers:
+  - name: vizlegal
+    url: https://github.com/vizlegal
