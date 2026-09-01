@@ -101,6 +101,28 @@ entries:
     version: 0.1.1
   pgbouncer:
   - apiVersion: v2
+    appVersion: 1.25.2
+    created: "2026-09-01T16:58:18.923022069Z"
+    description: A Helm chart for PGBouncer
+    digest: 4968bae018ef4daef92b7111b0fbb71f9898dc8534c8c21cce380b8da0fce2e2
+    home: https://github.com/vizlegal/containers-and-charts
+    keywords:
+    - pgbouncer
+    - postgresql
+    - connection-pooler
+    maintainers:
+    - name: vizlegal
+      url: https://github.com/vizlegal
+    name: pgbouncer
+    sources:
+    - https://github.com/vizlegal/containers-and-charts/tree/master/charts/pgbouncer
+    - https://github.com/vizlegal/containers-and-charts/tree/master/containers/pgbouncer
+    - https://github.com/pgbouncer/pgbouncer
+    type: application
+    urls:
+    - https://github.com/vizlegal/containers-and-charts/releases/download/pgbouncer-0.3.0/pgbouncer-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
     appVersion: 1.21.0
     created: "2024-06-21T18:38:33.293095522Z"
     description: A Helm chart for PGBouncer
@@ -222,4 +244,4 @@ entries:
     urls:
     - https://github.com/vizlegal/containers-and-charts/releases/download/vrt-0.1.0/vrt-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-25T17:20:37.518139657Z"
+generated: "2026-09-01T16:58:18.923043992Z"
