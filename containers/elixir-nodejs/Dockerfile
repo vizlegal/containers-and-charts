@@ -1,11 +1,13 @@
+ARG elixir_ver="1.20.5"
+ARG otp_ver="29.1.3"
+ARG debian="trixie-20261123"
 ARG variant="-slim"
-ARG elixir_ver="1.18-otp-27"
 
-FROM elixir:$elixir_ver$variant
+FROM hexpm/elixir:${elixir_ver}-erlang-${otp_ver}-debian-${debian}${variant}
 
 ARG port=4000
 ARG mix_env=dev
-ARG node_ver=22.x
+ARG node_ver=26.x
 
 LABEL vendor="vizlegal"
 
@@ -40,4 +42,6 @@ WORKDIR $APP
 COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
-RUN mix do local.hex --force, local.rebar --force
+# +JMsingle: lets the amd64 JIT run under QEMU when building multi-arch on an arm64 Mac.
+# Scoped to this step; the published image keeps the default JIT settings.
+RUN ERL_FLAGS="+JMsingle true" mix do local.hex --force + local.rebar --force
