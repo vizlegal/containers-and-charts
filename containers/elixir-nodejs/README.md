@@ -1,32 +1,44 @@
 # Elixir + nodeJS image
 
+Base: `hexpm/elixir` (pinned Elixir, OTP and Debian) + Node from NodeSource.
+Versions are build args: `elixir_ver`, `otp_ver`, `debian`, `node_ver`, `variant` (`-slim` or `""`).
+
+The vlui release ships the ERTS from this image, so vlui's runtime stage must use the
+same Debian release (`trixie` builder → `minideb:trixie` runtime).
+
 ## Build
 
-    podman build -t quay.io/vizlegalq/elixir-nodejs:1.17.3-slim .
-
-    podman build -t quay.io/vizlegalq/elixir-nodejs:1.17.3 . --build-arg variant=""
-
-    podman build -t quay.io/vizlegalq/elixir-nodejs:1.17.3 . --build-arg variant=""
-
-## Build MultiArch with Docker
-
-    docker buildx build --push --platform linux/arm64,linux/amd64 --build-arg node_ver=20.x --tag quay.io/vizlegalq/elixir-nodejs:1.17-node20-otp-27-slim .
-
-The base elixir version defaults to the one in the Dockerfile; override it to rebuild older tags (rebuilding with `--pull` also picks up the latest OTP patch, e.g. security/ssl fixes):
-
-    docker buildx build --push --pull --platform linux/arm64,linux/amd64 --build-arg elixir_ver=1.17-otp-27 --build-arg node_ver=20.x --tag quay.io/vizlegalq/elixir-nodejs:1.17-node20-otp-27-slim .
-
+    podman build -t rg.fr-par.scw.cloud/vizlegal/elixir-nodejs:1.20-otp29-node26-trixie .
 
 ## Build MultiArch with Podman
 
 https://developers.redhat.com/articles/2023/11/03/how-build-multi-architecture-container-images
 
+    scw registry login program=podman   # or: podman login rg.fr-par.scw.cloud -u nologin (password = a Scaleway API secret key)
+    podman manifest create rg.fr-par.scw.cloud/vizlegal/elixir-nodejs:1.20-otp29-node26-trixie
+    podman build --platform linux/amd64,linux/arm64 --manifest rg.fr-par.scw.cloud/vizlegal/elixir-nodejs:1.20-otp29-node26-trixie .
+    podman manifest push --all rg.fr-par.scw.cloud/vizlegal/elixir-nodejs:1.20-otp29-node26-trixie
 
-    podman manifest create quay.io/vizlegalq/elixir-nodejs:1.17-node20-otp-27-slim
-    podman build --platform linux/amd64,linux/arm64  --manifest quay.io/vizlegalq/elixir-nodejs:1.17-node20-otp-27-slim  .
-    podman manifest push quay.io/vizlegalq/elixir-nodejs:1.17-node20-otp-27-slim
+CI runners and the k8s nodes are amd64, so the amd64 variant is required. On an arm64 Mac it is
+built under QEMU, where OTP's amd64 JIT needs `+JMsingle true` (set in the Dockerfile for the
+build step). To run the amd64 variant locally, pass it too:
 
+    podman run --rm --platform linux/amd64 -e ERL_FLAGS="+JMsingle true" \
+      rg.fr-par.scw.cloud/vizlegal/elixir-nodejs:1.20-otp29-node26-trixie bash -c 'uname -m && elixir -v'
+
+## Build MultiArch with Docker
+
+    docker buildx build --push --platform linux/arm64,linux/amd64 --tag rg.fr-par.scw.cloud/vizlegal/elixir-nodejs:1.20-otp29-node26-trixie .
+
+The versions default to the ones in the Dockerfile. To pick up a newer OTP patch or Debian
+security fixes, bump `otp_ver` / `debian` to a newer
+[hexpm/elixir tag](https://hub.docker.com/r/hexpm/elixir/tags) and rebuild with `--pull`:
+
+    docker buildx build --push --pull --platform linux/arm64,linux/amd64 \
+      --build-arg otp_ver=29.1.3 --build-arg debian=trixie-20261123 \
+      --tag rg.fr-par.scw.cloud/vizlegal/elixir-nodejs:1.20-otp29-node26-trixie .
 
 ## check image
-    docker run --rm quay.io/vizlegalq/elixir-nodejs:1.17-node20-otp-27-slim bash -c \
-    'echo "Elixir version: $(elixir -v )" && echo "Node.js version: $(node -v)" && echo "CPU architecture: $(cat /proc/version)"  '
+
+    podman run --rm rg.fr-par.scw.cloud/vizlegal/elixir-nodejs:1.20-otp29-node26-trixie bash -c \
+    'elixir -v && node -v && cat /etc/debian_version && uname -m'
